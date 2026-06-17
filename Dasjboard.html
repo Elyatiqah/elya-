@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GMAW Real-Time Quality Monitoring Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        margin:0;
+        background:#f4f6f9;
+    }
+
+    header{
+        background:#0d1b2a;
+        color:white;
+        padding:20px;
+        text-align:center;
+    }
+
+    section{
+        background:white;
+        margin:15px;
+        padding:15px;
+        border-radius:10px;
+        box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .row{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+    }
+
+    .card{
+        flex:1;
+        min-width:250px;
+        padding:10px;
+        border:1px solid #ddd;
+        border-radius:10px;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+    }
+
+    table, th, td{
+        border:1px solid #ccc;
+    }
+
+    th, td{
+        padding:8px;
+        text-align:center;
+    }
+
+    footer{
+        text-align:center;
+        padding:15px;
+        background:#0d1b2a;
+        color:white;
+    }
+
+    img{
+        width:100%;
+        max-width:250px;
+        border-radius:10px;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1>GMAW REAL-TIME QUALITY MONITORING SYSTEM</h1>
+    <h3>BMIK 2124 ELECTRICAL WELDING EQUIPMENT</h3>
+    <p>Assignment Dashboard</p>
+
+    <div class="row">
+
+        <div class="card">
+            <img src="member1.jpg" alt="Member 1">
+            <p><b>NUR ELYA ATIQAH BINTI SAHARIL</b><br>(B142410532)<br>Electrical Engineer</p>
+        </div>
+
+        <div class="card">
+            <img src="member2.jpg" alt="Member 2">
+            <p><b>NADHIRAH WAHIDAH BINTI ARMAN</b><br>(B142410505)<br>Thermal Analyst</p>
+        </div>
+
+        <div class="card">
+            <img src="member3.jpg" alt="Member 3">
+            <p><b>MUHAMAD RIDZUAN SHAH</b><br>(B142510525)<br>Mechanical Analyst</p>
+        </div>
+
+    </div>
+</header>
+
+
+<!-- DATA SOURCE -->
+<section>
+    <h2>Data Source Panel</h2>
+    <p>Dataset digunakan terdiri daripada 30 sampel parameter kimpalan GMAW seperti current, voltage, power, heat input dan resistance.</p>
+
+    <img src="table1.png" alt="Table 1 Data">
+    <img src="table2.png" alt="Table 2 Data">
+    <img src="table3.png" alt="Table 3 Data">
+</section>
+
+
+<!-- SCATTER DIAGRAM -->
+<section>
+    <h2>Scatter Diagrams (3 Plots)</h2>
+    <div class="row">
+        <img src="scatter1.png" alt="Scatter 1">
+        <img src="scatter2.png" alt="Scatter 2">
+        <img src="scatter3.png" alt="Scatter 3">
+    </div>
+</section>
+
+
+<!-- TABLE 2 DISPLAY -->
+<section>
+    <h2>Table 2: Temperature Readings (5 Samples)</h2>
+
+    <table>
+        <tr>
+            <th>Sample</th>
+            <th>T1</th>
+            <th>T2</th>
+            <th>T3</th>
+            <th>T4</th>
+            <th>T5</th>
+            <th>Mean</th>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>120</td><td>122</td><td>121</td><td>119</td><td>123</td>
+            <td>121</td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>130</td><td>132</td><td>131</td><td>129</td><td>133</td>
+            <td>131</td>
+        </tr>
+
+        <tr>
+            <td>3</td>
+            <td>125</td><td>126</td><td>127</td><td>124</td><td>128</td>
+            <td>126</td>
+        </tr>
+
+        <tr>
+            <td>4</td>
+            <td>140</td><td>142</td><td>141</td><td>139</td><td>143</td>
+            <td>141</td>
+        </tr>
+
+        <tr>
+            <td>5</td>
+            <td>135</td><td>136</td><td>137</td><td>134</td><td>138</td>
+            <td>136</td>
+        </tr>
+    </table>
+</section>
+
+
+<!-- CONTROL CHART -->
+<section>
+    <h2>Control Chart (X-bar & R Chart)</h2>
+
+    <canvas id="xbarChart"></canvas>
+    <canvas id="rChart"></canvas>
+</section>
+
+
+<!-- COMPARISON -->
+<section>
+    <h2>Comparison: Arc Analyzer vs LVDT</h2>
+
+    <div class="row">
+        <div class="card">
+            <h3>Arc Analyzer</h3>
+            <p>Used to measure electrical welding parameters such as current, voltage and power in real-time.</p>
+        </div>
+
+        <div class="card">
+            <h3>LVDT</h3>
+            <p>Used to measure displacement and mechanical deformation during welding process.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- CONCLUSION -->
+<section>
+    <h2>Conclusion</h2>
+    <p>
+        The monitoring system successfully integrates electrical and mechanical data analysis for GMAW process optimization.
+        The results show stable trends in welding parameters with acceptable variation across samples.
+    </p>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+    <p>GMAW Monitoring System Dashboard | BMIK 2124 Electrical Welding Equipment</p>
+    <p>Recommendations: Improve sensor calibration and increase sample size for better accuracy.</p>
+</footer>
+
+
+<!-- CHART JS -->
+<script>
+const xbar = document.getElementById('xbarChart');
+
+new Chart(xbar, {
+    type: 'line',
+    data: {
+        labels: ['1','2','3','4','5'],
+        datasets: [{
+            label: 'X-bar Chart',
+            data: [121,131,126,141,136],
+            borderColor: 'blue',
+            fill: false
+        }]
+    }
+});
+
+const r = document.getElementById('rChart');
+
+new Chart(r, {
+    type: 'line',
+    data: {
+        labels: ['1','2','3','4','5'],
+        datasets: [{
+            label: 'R Chart',
+            data: [4,4,4,4,4],
+            borderColor: 'red',
+            fill: false
+        }]
+    }
+});
+</script>
